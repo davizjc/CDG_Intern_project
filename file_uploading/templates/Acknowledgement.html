@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Success</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #454545;
+            margin-top: 0;
+        }
+
+        p {
+            margin: 15px 0;
+            font-size: 16px;
+        }
+
+        .file-name,
+        .file-category {
+            font-weight: bold;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 10px;
+            border: none;
+            background-color: #454545;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #454545;
+        }
+
+        .btn-row {
+            display: flex;
+            justify-content: center;
+        }
+
+        .submit-row {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .ocr-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            
+        }
+        .btn-container{
+            margin-left: 20px;
+        }
+
+        .validate-save-btn {
+            font-weight: bold;
+            color: rgba(3, 68, 48, 0.968);
+            text-decoration: none;
+            font-size: 20px;       
+        }
+        
+        .validate-save-btn:hover {
+            text-decoration: underline; /* Optional: Underline on hover to indsicate it's a link */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="ocr-container">
+        <div class="container">
+            <div class="submit-row">
+                <h1>OCR</h1>
+            </div>
+            <div class="row">
+                <div>
+                    <p>File uploaded successfully</p>
+                    {% for name in names %}
+                    <p>File Name: <span class="file-name">{{ name }}</span></p>
+                    <!-- <p>Predicted Category: <span class="file-category">{{ categories[loop.index0] }}</span></p> -->
+                    {% endfor %}
+                </div>
+                <div>
+                    <div class="btn-container">
+                        {% for category in categories %}
+                            {% if category == "national_id_card" %}
+                                <div class="btn-row"><a href="#" id="start-ocr-btn" class="btn">บัตรประชาชน</a></div>
+                            {% elif category == "passport" %}
+                                <div class="btn-row"><a href="#" id="start-passport-btn" class="btn">พาสปอร์ต</a></div>
+                            {% elif category == "driver_license" %}
+                                <div class="btn-row"><a href="#" id="start-dl-btn" class="btn">ใบขับขี่</a></div>
+                            {% elif category == "house_register" %}
+                                <div class="btn-row"><a href="#" id="start-hr1-btn" class="btn">รายการเกี่ยวกับบ้าน</a></div>
+                                <div class="btn-row"><a href="#" id="start-hr2-btn" class="btn">รายการบุคคลในบ้าน</a></div>
+                            {% elif category == "commercial_registration" %}
+                                <div class="btn-row"><a href="#" id="start-cm-btn" class="btn">ใบสำคัญแสดงการจดทะเบียนบริษัท</a></div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="submit-row">
+                <a href="/" class="btn">Back</a>
+                <a href="/list-uploads">View All Uploads</a>
+                <!-- <a href="/display_ocr_id_results" class="validate-save-btn">Validate & Save</a> -->
+            </div>
+        </div>
+    </div>
+
+    <div id="wait-message" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.9); z-index: 1000; text-align: center; line-height: 100vh; font-size: 24px;">
+        Wait a moment...
+    </div>
+
+   
+<!-- first Way i do redirect to result page spererately -->
+<script>
+    $(document).ready(function() {
+        var uploadedCategories = [{% for category in categories %}"{{ category }}"{% if not loop.last %},{% endif %}{% endfor %}];
+        uploadedCategories = [...new Set(uploadedCategories)];
+
+        var categoryButtonMapping = {
+            "national_id_card": "start-ocr-btn",
+            "passport": "start-passport-btn",
+            "driver_license": "start-dl-btn",
+            "house_register": ["start-hr1-btn", "start-hr2-btn"],
+            "commercial_registration": "start-cm-btn"
+        };
+
+        // Initially hide all buttons
+        $('.btn-row').hide();
+
+        // Now, use pure JavaScript to handle button showing based on uploaded categories
+        uploadedCategories.forEach(function(category) {
+            var buttonId = categoryButtonMapping[category];
+            if (Array.isArray(buttonId)) {
+                buttonId.forEach(function(id) {
+                    $('#' + id).parent().show();
+                });
+            } else {
+                $('#' + buttonId).parent().show();
+            }
+        });
+        
+        function showWaitMessage() {
+            $('#wait-message').css('display', 'block');
+        }
+
+        function hideWaitMessage() {
+            $('#wait-message').css('display', 'none');
+        }
+
+        $('#start-ocr-btn, #start-passport-btn, #start-dl-btn, #start-hr1-btn, #start-hr2-btn, #start-cm-btn').click(function(e) {
+            e.preventDefault();
+
+            showWaitMessage();
+
+            var route = "";
+            switch ($(this).attr('id')) {
+                case 'start-ocr-btn':
+                    route = "/run_ocr_id";
+                    break;
+                case 'start-passport-btn':
+                    route = "/run_ocr_passport";
+                    break;
+                case 'start-dl-btn':
+                    route = "/run_ocr_dl";
+                    break;
+                case 'start-hr1-btn':
+                    route = "/run_ocr_hr1";
+                    break;
+                case 'start-hr2-btn':
+                    route = "/run_ocr_hr2";
+                    break;
+                case 'start-cm-btn':
+                    route = "/run_ocr_cm";
+                    break;
+            }
+
+            $.post(route, function(data) {
+                hideWaitMessage();
+
+                if (data && data.success) {
+                    var redirectRoute = "";
+                    switch (route) {
+                        case "/run_ocr_id":
+                            redirectRoute = '/display_ocr_id_results';
+                            break;
+                        case "/run_ocr_passport":
+                            redirectRoute = '/display_ocr_passport_results';
+                            break;
+                        case "/run_ocr_dl":
+                            redirectRoute = '/display_ocr_dl_results';
+                            break;
+                        case "/run_ocr_hr1":
+                            redirectRoute = '/display_ocr_hr1_results';
+                            break;
+                        case "/run_ocr_hr2":
+                            redirectRoute = '/display_ocr_hr2_results';
+                            break;
+                        case "/run_ocr_cm":
+                            redirectRoute = '/display_ocr_cm_results';
+                            break;
+                    }
+
+                    // Create an anchor element
+                    var link = document.createElement('a');
+                    link.href = redirectRoute;
+                    link.target = '_blank'; // Open in new tab
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+
+                } else {
+                    alert("Error running OCR. Please try again.");
+                }
+            });
+
+
+            
+        });
+    });
+</script>
+
+
+<!-- <script>
+    $(document).ready(function() {
+        var uploadedCategories = [{% for category in categories %}"{{ category }}"{% if not loop.last %},{% endif %}{% endfor %}];
+        uploadedCategories = [...new Set(uploadedCategories)];
+
+        var categoryButtonMapping = {
+            "national_id_card": "start-ocr-btn",
+            "passport": "start-passport-btn",
+            "driver_license": "start-dl-btn",
+            "house_register": ["start-hr1-btn", "start-hr2-btn"],
+            "commercial_registration": "start-cm-btn"
+        };
+
+        // Initially hide all buttons
+        $('.btn-row').hide();
+
+        // Now, use pure JavaScript to handle button showing based on uploaded categories
+        uploadedCategories.forEach(function(category) {
+            var buttonId = categoryButtonMapping[category];
+            if (Array.isArray(buttonId)) {
+                buttonId.forEach(function(id) {
+                    $('#' + id).parent().show();
+                });
+            } else {
+                $('#' + buttonId).parent().show();
+            }
+        });
+        
+        function showWaitMessage() {
+            $('#wait-message').css('display', 'block');
+        }
+
+        function hideWaitMessage() {
+            $('#wait-message').css('display', 'none');
+        }
+
+        $('#start-ocr-btn, #start-passport-btn, #start-dl-btn, #start-hr1-btn, #start-hr2-btn, #start-cm-btn').click(function(e) {
+            e.preventDefault();
+
+            showWaitMessage();
+
+            var route = "";
+            switch ($(this).attr('id')) {
+                case 'start-ocr-btn':
+                    route = "/run_ocr_id";
+                    break;
+                case 'start-passport-btn':
+                    route = "/run_ocr_passport";
+                    break;
+                case 'start-dl-btn':
+                    route = "/run_ocr_dl";
+                    break;
+                case 'start-hr1-btn':
+                    route = "/run_ocr_hr1";
+                    break;
+                case 'start-hr2-btn':
+                    route = "/run_ocr_hr2";
+                    break;
+                case 'start-cm-btn':
+                    route = "/run_ocr_cm";
+                    break;
+            }
+
+            $.post(route, function(data) {
+                hideWaitMessage();
+
+                if (data && data.success) {
+                    alert("OCR completed successfully!");
+                } else {
+                    alert("Error running OCR. Please try again.");
+                }
+            });
+        });
+    });
+</script> -->
+
+</body>
+
+</html>

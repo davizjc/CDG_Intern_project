@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCR Driver License Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 90%;
+            width: 400px;
+            text-align: center;
+            margin-bottom: 20px;
+            margin-top: 20px;
+
+        }
+
+        @media screen and (max-width: 480px) {
+            .container {
+                width: 90%;
+                padding: 10px;
+            }
+        }
+
+        h1 {
+            color: #454545;
+            margin-top: 0;
+        }
+
+        p {
+            margin: 15px 0;
+            font-size: 16px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .btn {
+            display: inline-block;
+            min-width: 120px; /* Set a minimum width for the button */
+            padding: 10px 0;
+            margin: 10px;
+            text-align: center; /* Center the text within the button */
+            border: none;
+            background-color: #454545;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            white-space: nowrap; /* Keep the text in one line */
+        }
+
+        .btn:hover {
+            background-color: #454545;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .btn-container .btn {
+            flex: 1; /* Distribute available space equally between the two elements */
+        }
+
+        .flex-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: start; /* ensures containers align at the top */
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto; /* center the flex container */
+            flex-wrap: wrap; /* allows the containers to wrap on smaller screens */
+        }
+
+        .container {
+            /* ... (existing styles) ... */
+            width: 40%; /* slightly smaller than before, with a little gap between the containers */
+            max-width: 450px;
+            margin: 20px 2.5%; /* provides some spacing between the two columns */
+        }
+
+        @media screen and (max-width: 768px) {
+            .container {
+                width: 90%; /* 90% width on smaller screens */
+                margin: 20px 5%; /* centers the container */
+            }
+        }
+
+
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px; /* or any desired spacing */
+        }
+
+        .form-group {
+            flex: 1; /* equally distribute space */
+            margin-right: 10px; /* add some spacing between the form groups */
+        }
+
+        .form-group:last-child {
+            margin-right: 0; /* remove margin for the last form group in a row */
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px; /* spacing between label and input */
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>HR1 OCR Results:</h1>
+    
+        <form id="editForm" action="/save_hr1_edits" method="POST">
+    
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="hr1_home_id">เลขรหัสประจำบ้าน:</label>
+                    <input type="text" id="hr1_home_id" name="hr1_home_id" value="{{ hr1_home_id }}">
+                </div>
+                <div class="form-group">
+                    <label for="hr1_registration_office">สำนักทะเบียน:</label>
+                    <input type="text" id="hr1_registration_office" name="hr1_registration_office" value="{{ hr1_registration_office }}">
+                </div>
+            </div>
+    
+            <div class="form-row">
+                <div class="form-group full-width">
+                    <label for="hr1_address">ที่อยู่:</label>
+                    <input type="text" id="hr1_address" name="hr1_address" value="{{ hr1_address }}">
+                </div>
+            </div>
+    
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="hr1_village_name">ชื่อหมู่บ้าน:</label>
+                    <input type="text" id="hr1_village_name" name="hr1_village_name" value="{{ hr1_village_name }}">
+                </div>
+                <div class="form-group">
+                    <label for="hr1_house_name">ชื่อบ้าน:</label>
+                    <input type="text" id="hr1_house_name" name="hr1_house_name" value="{{ hr1_house_name }}">
+                </div>
+            </div>
+    
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="hr1_house_type">ประเภทบ้าน:</label>
+                    <input type="text" id="hr1_house_type" name="hr1_house_type" value="{{ hr1_house_type }}">
+                </div>
+                <div class="form-group">
+                    <label for="hr1_house_characteristics">ลักษณะบ้าน:</label>
+                    <input type="text" id="hr1_house_characteristics" name="hr1_house_characteristics" value="{{ hr1_house_characteristics }}">
+                </div>
+            </div>
+    
+            <div class="form-row">
+                <div class="form-group full-width">
+                    <label for="hr1_shouse_registration_date">วันเดือนปีที่กำหนดบ้านเลขที่:</label>
+                    <input type="text" id="hr1_house_registration_date" name="hr1_house_registration_date" value="{{ hr1_house_registration_date }}">
+                </div>
+            </div>
+    
+            <p><span style="font-weight: bold; color: red;">Please review the information and make edits if any mistakes are found *</span></p>
+    
+            <!-- Buttons -->
+            <div class="btn-container">
+                <a href="/" class="btn">Return</a>
+                <button type="submit" class="btn" onclick="submitEdits()">Save</button>
+            </div>
+        </form> <!-- Form ends here -->
+    </div>
+
+    <script>
+        function submitEdits() {
+            let formData = new FormData();
+            formData.append("home_id", document.getElementById('input_id').value);
+            formData.append("registration_office", document.getElementById('input_name').value);
+            formData.append("address", document.getElementById('input_address').value);
+            formData.append("village_name", document.getElementById('input_thai_name').value);
+            formData.append("house_name", document.getElementById('input_thai_name').value);
+            formData.append("house_type", document.getElementById('input_thai_name').value);
+            formData.append("house_characteristics", document.getElementById('input_thai_name').value);
+            formData.append("house_registration_date", document.getElementById('input_thai_name').value);
+    
+            fetch('/save_hr1_edits', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.message);
+                    window.location.href = "/";  // Redirect to homepage
+                } else {
+                    alert("There was an error saving the data.");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Classifier - GFG</title>
+    <style>
+        /* Reset and global styles */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Form styles */
+        form {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        input[type="submit"], .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 10px;
+            border: none;
+            background-color: #2a2a2a;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        input[type="submit"]:hover, .btn:hover {
+            background-color: #454545; 
+        }
+
+        .input-row {
+            align-items: center; 
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .input-row p {
+            margin: 0;
+        }
+
+        .submit-row {
+            display: flex;
+            justify-content: center; 
+            gap: 30px; 
+            align-items: center; 
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 500px) {
+            form {
+                max-width: 90%; 
+                padding: 15px;
+            }
+
+            .input-row {
+                flex-direction: column;
+                align-items: flex-start; 
+            }
+
+            h2 {
+                font-size: 20px; 
+            }
+
+            .submit-row {
+                flex-direction: column; 
+                gap: 10px; 
+            }
+        }
+
+    </style>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <form action="/success" method="post" enctype="multipart/form-data">
+        <h2>Upload Your Files</h2>
+    
+        <div class="input-row">
+            <p>National ID Card</p>
+            <input type="file" data-category="national_id_card" name="file[]" class="upload-input"/>
+            <input type="hidden" name="file_category[]" value="national_id_card"/>
+        </div>
+    
+        <div class="input-row">
+            <p>Passport</p>
+            <input type="file" data-category="passport" name="file[]" class="upload-input"/>
+            <input type="hidden" name="file_category[]" value="passport"/>
+        </div>
+
+        <div class="input-row">
+            <p>House Registration </p>
+            <input type="file" data-category="house_register" name="file[]" class="upload-input"/>
+            <input type="hidden" name="file_category[]" value="house_register"/>
+
+        </div>
+
+        <div class="input-row">
+            <p>Driver License</p>
+            <input type="file" data-category="driver_license" name="file[]" class="upload-input"/>
+            <input type="hidden" name="file_category[]" value="driver_license"/>
+
+        </div>
+
+        <div class="input-row">
+            <p>Commercial Registration</p>
+            <input type="file" data-category="commercial_registration" name="file[]" class="upload-input"/>
+            <input type="hidden" name="file_category[]" value="commercial_registration"/>
+
+        </div>
+        <div class="submit-row">
+            <input type="submit" value="Upload All">
+            <a href="/list-uploads">View All Uploads</a>
+        </div>
+    </form>
+</body>
+
+
+
+<script>
+    document.querySelector('form').addEventListener('submit', function(event) {
+        let hasFile = false;
+        document.querySelectorAll('.upload-input').forEach(function(input) {
+            if (input.files.length > 0) {
+                hasFile = true;
+            }
+        });
+
+        if (!hasFile) {
+            alert('Please select at least one file before submitting.');
+            event.preventDefault();  // Prevent form submission
+        }
+    });
+</script>
+
+
+</html>

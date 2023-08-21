@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCR Driver License Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 90%;
+            width: 400px;
+            text-align: center;
+            margin-bottom: 20px;
+            margin-top: 20px;
+
+        }
+
+        @media screen and (max-width: 480px) {
+            .container {
+                width: 90%;
+                padding: 10px;
+            }
+        }
+
+        h1 {
+            color: #454545;
+            margin-top: 0;
+        }
+
+        p {
+            margin: 15px 0;
+            font-size: 16px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .btn {
+            display: inline-block;
+            min-width: 120px; /* Set a minimum width for the button */
+            padding: 10px 0;
+            margin: 10px;
+            text-align: center; /* Center the text within the button */
+            border: none;
+            background-color: #454545;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            white-space: nowrap; /* Keep the text in one line */
+        }
+
+        .btn:hover {
+            background-color: #454545;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .btn-container .btn {
+            flex: 1; /* Distribute available space equally between the two elements */
+        }
+
+        .flex-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: start; /* ensures containers align at the top */
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto; /* center the flex container */
+            flex-wrap: wrap; /* allows the containers to wrap on smaller screens */
+        }
+
+        .container {
+            /* ... (existing styles) ... */
+            width: 40%; /* slightly smaller than before, with a little gap between the containers */
+            max-width: 450px;
+            margin: 20px 2.5%; /* provides some spacing between the two columns */
+        }
+
+        @media screen and (max-width: 768px) {
+            .container {
+                width: 90%; /* 90% width on smaller screens */
+                margin: 20px 5%; /* centers the container */
+            }
+        }
+
+
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px; /* or any desired spacing */
+        }
+
+        .form-group {
+            flex: 1; /* equally distribute space */
+            margin-right: 10px; /* add some spacing between the form groups */
+        }
+
+        .form-group:last-child {
+            margin-right: 0; /* remove margin for the last form group in a row */
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px; /* spacing between label and input */
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>HR2 OCR Results:</h1>
+    
+        <form id="editForm" action="/save_hr2_edits" method="POST">
+    
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="hr2_vol_num">เล่มที่:</label>
+                    <input type="text" id="hr2_vol_num" name="hr2_vol_num" value="{{ hr2_vol_num }}">
+                </div>
+                <div class="form-group">
+                    <label for="hr2_order_num">ลำดับที่:</label>
+                    <input type="text" id="hr2_order_num" name="hr2_order_num" value="{{ hr2_order_num }}">
+                </div>
+           
+            </div>
+           
+            <div class="form-row">
+
+                <div class="form-group">
+                    <label for="hr2_name">ชื่อ:</label>
+                    <input type="text" id="hr2_name" name="hr2_name" value="{{ hr2_name }}">
+                </div>
+               
+                <div class="form-group full-width">
+                    <label for="hr2_house_id">เลขรหัสประจำบ้าน:</label>
+                    <input type="text" id="hr2_house_id" name="hr2_house_id" value="{{ hr2_house_id }}">
+                </div>
+              
+            </div>
+    
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="hr2_nationality">สัญชาติ:</label>
+                    <input type="text" id="hr2_nationality" name="hr2_nationality" value="{{ hr2_nationality }}">
+                </div>
+                <div class="form-group">
+                    <label for="hr2_gender">เพศ:</label>
+                    <input type="text" id="hr2_gender" name="hr2_gender" value="{{ hr2_gender }}">
+                </div>
+            </div>
+    
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="hr2_person_id">id:</label>
+                    <input type="text" id="hr2_person_id" name="hr2_person_id" value="{{ hr2_person_id }}">
+                </div>
+                <div class="form-group">
+                    <label for="hr2_status">สถานภาพ:</label>
+                    <input type="text" id="hr2_status" name="hr2_status" value="{{ hr2_status }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="hr2_birth_date">เกิดเมื่อ:</label>
+                    <input type="text" name="hr2_birth_date" id="hr2_birth_date" value="{{ hr2_birth_date }}" class="form-control">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="hr2_mother_name">แม่:</label>
+                    <input type="text" name="hr2_mother_name" id="hr2_mother_name" value="{{ hr2_mother_name }}" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="hr2_mother_nationality">สัญชาติแม่:</label>
+                    <input type="text" name="hr2_mother_nationality" id="hr2_mother_nationality" value="{{ hr2_mother_nationality }}" class="form-control">
+                </div>
+                          
+            </div>
+        
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="hr2_father_name">พ่อ:</label>
+                    <input type="text" name="hr2_father_name" id="hr2_father_name" value="{{ hr2_father_name }}" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="hr2_father_nationality">สัญชาติพ่อ:</label>
+                    <input type="text" name="hr2_father_nationality" id="hr2_father_nationality" value="{{ hr2_father_nationality }}" class="form-control">
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="hr2_origin">มาจาก:</label>
+                    <input type="text" name="hr2_origin" id="hr2_origin" value="{{ hr2_origin }}" class="form-control">
+                </div>
+            
+                <div class="form-group">
+                    <label for="hr2_destination">ไปที่:</label>
+                    <input type="text" name="hr2_destination" id="hr2_destination" value="{{ hr2_destination }}" class="form-control">
+                </div>
+            </div>
+    
+            <p><span style="font-weight: bold; color: red;">Please review the information and make edits if any mistakes are found *</span></p>
+    
+            <!-- Buttons -->
+            <div class="btn-container">
+                <a href="/" class="btn">Return</a>
+                <button type="submit" class="btn" onclick="submitEdits()">Save</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function submitEdits() {
+            let formData = new FormData();
+            formData.append("vol_num", document.querySelector('vol_num').value);
+            formData.append("house_id", document.querySelector('house_id').value);
+            formData.append("order_num", document.querySelector('order_num').value);
+            formData.append("name", document.querySelector('name').value);
+            formData.append("nationality", document.querySelector('nationality').value);
+            formData.append("gender", document.querySelector('gender').value);
+            formData.append("person_id", document.querySelector('person_id').value);
+            formData.append("status", document.querySelector('status').value);
+            formData.append("birth_date", document.querySelector('birth_date').value);
+            formData.append("mother_name", document.querySelector('mother_name').value);
+            formData.append("mother_nationality", document.querySelector('mother_nationality').value);
+            formData.append("father_name", document.querySelector('father_name').value);
+            formData.append("father_nationality", document.querySelector('father_nationality').value);
+            formData.append("origin", document.querySelector('origin').value);
+            formData.append("destination", document.querySelector('destination').value);
+    
+            fetch('/save_hr2_edits', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.message);
+                    window.location.href = "/";  // Redirect to homepage
+                } else {
+                    alert("There was an error saving the data.");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+    
+</body>
+
+</html>

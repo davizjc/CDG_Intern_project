@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCR ID Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 90%;
+            width: 400px;
+            text-align: center;
+            margin-bottom: 20px;
+            margin-top: 20px;
+
+        }
+
+        @media screen and (max-width: 480px) {
+            .container {
+                width: 90%;
+                padding: 10px;
+            }
+        }
+
+        h1 {
+            color: #454545;
+            margin-top: 0;
+        }
+
+        p {
+            margin: 15px 0;
+            font-size: 16px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .btn {
+            display: inline-block;
+            min-width: 120px; /* Set a minimum width for the button */
+            padding: 10px 0;
+            margin: 10px;
+            text-align: center; /* Center the text within the button */
+            border: none;
+            background-color: #454545;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            white-space: nowrap; /* Keep the text in one line */
+        }
+
+        .btn:hover {
+            background-color: #454545;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .btn-container .btn {
+            flex: 1; /* Distribute available space equally between the two elements */
+        }
+
+        .flex-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: start; /* ensures containers align at the top */
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto; /* center the flex container */
+            flex-wrap: wrap; /* allows the containers to wrap on smaller screens */
+        }
+
+        .container {
+            /* ... (existing styles) ... */
+            width: 40%; /* slightly smaller than before, with a little gap between the containers */
+            max-width: 450px;
+            margin: 20px 2.5%; /* provides some spacing between the two columns */
+        }
+
+        @media screen and (max-width: 768px) {
+            .container {
+                width: 90%; /* 90% width on smaller screens */
+                margin: 20px 5%; /* centers the container */
+            }
+        }
+
+
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px; /* or any desired spacing */
+        }
+
+        .form-group {
+            flex: 1; /* equally distribute space */
+            margin-right: 10px; /* add some spacing between the form groups */
+        }
+
+        .form-group:last-child {
+            margin-right: 0; /* remove margin for the last form group in a row */
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px; /* spacing between label and input */
+        }
+
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>ID OCR Results:</h1> 
+        <!-- Form begins here -->
+        <form id="editForm" action="/save_edits" method="POST">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="id_id">ID:</label>
+                    <input type="text" id="id_id" name="id_id" value="{{ id_id }}" >
+                </div>
+                <div class="form-group">
+                    <label for="id_name">Name:</label>
+                    <input type="text" id="id_name" name="id_name" value="{{ id_name }}">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="id_thai_name">Thai Name:</label>
+                    <input type="text" id="id_thai_name" name="id_thai_name" value="{{ id_thai_name }}">
+                </div>
+                <div class="form-group">
+                    <label for="id_birth_date">Birth Date:</label>
+                    <input type="text" id="id_birth_date" name="id_birth_date" value="{{ id_birth_date }}">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="id_address">Address:</label>
+                    <input type="text" id="id_address" name="id_address" value="{{ id_address }}">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="id_date_of_issue">Date of Issue:</label>
+                    <input type="text" id="id_date_of_issue" name="id_date_of_issue" value="{{ id_date_of_issue }}">
+                </div>
+                <div class="form-group">
+                    <label for="id_date_expire">Date of Expiry:</label>
+                    <input type="text" id="id_date_expire" name="id_date_expire" value="{{ id_date_expire }}">
+                </div>
+            </div>
+
+            <p><span style="font-weight: bold; color: red;">Please review the information and make edits if any mistakes are found *</span></p>
+            
+            <!-- Buttons -->
+            <div class="btn-container">
+                <a href="/" class="btn">Return</a>
+                <button type="submit" class="btn" onclick="submitEdits()">Save</button>
+            </div>
+        </form> <!-- Form ends here -->
+    </div>
+
+    <script>
+        function submitEdits() {
+            let formData = new FormData();
+            formData.append("id", document.getElementById('id').value);
+            formData.append("name", document.getElementById('name').value);
+            formData.append("thai_name", document.getElementById('thai_name').value);
+            formData.append("birth_date", document.getElementById('birth_date').value);
+            formData.append("address", document.getElementById('address').value);
+            formData.append("date_of_issue", document.getElementById('date_of_issue').value);
+            formData.append("date_expire", document.getElementById('date_expire').value);
+
+            fetch('/save_edits', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.message);
+                    window.location.href = "/";  // Redirect to homepage
+                } else {
+                    alert("There was an error saving the data.");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>

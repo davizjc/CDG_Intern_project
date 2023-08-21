@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCR Passport Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 90%;
+            width: 400px;
+            text-align: center;
+            margin-bottom: 20px;
+            margin-top: 20px;
+
+        }
+
+        @media screen and (max-width: 480px) {
+            .container {
+                width: 90%;
+                padding: 10px;
+            }
+        }
+
+        h1 {
+            color: #454545;
+            margin-top: 0;
+        }
+
+        p {
+            margin: 15px 0;
+            font-size: 16px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .btn {
+            display: inline-block;
+            min-width: 120px; /* Set a minimum width for the button */
+            padding: 10px 0;
+            margin: 10px;
+            text-align: center; /* Center the text within the button */
+            border: none;
+            background-color: #454545;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            white-space: nowrap; /* Keep the text in one line */
+        }
+
+        .btn:hover {
+            background-color: #454545;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .btn-container .btn {
+            flex: 1; /* Distribute available space equally between the two elements */
+        }
+
+        .flex-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: start; /* ensures containers align at the top */
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto; /* center the flex container */
+            flex-wrap: wrap; /* allows the containers to wrap on smaller screens */
+        }
+
+        .container {
+            /* ... (existing styles) ... */
+            width: 40%; /* slightly smaller than before, with a little gap between the containers */
+            max-width: 450px;
+            margin: 20px 2.5%; /* provides some spacing between the two columns */
+        }
+
+        @media screen and (max-width: 768px) {
+            .container {
+                width: 90%; /* 90% width on smaller screens */
+                margin: 20px 5%; /* centers the container */
+            }
+        }
+
+
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px; /* or any desired spacing */
+        }
+
+        .form-group {
+            flex: 1; /* equally distribute space */
+            margin-right: 10px; /* add some spacing between the form groups */
+        }
+
+        .form-group:last-child {
+            margin-right: 0; /* remove margin for the last form group in a row */
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px; /* spacing between label and input */
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Passport OCR Results:</h1>
+        <form id="editForm" action="/save_passport_edits" method="POST">
+    
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="type">Type:</label>
+                    <input type="text" id="pp_type" name="pp_type" value=" P ">
+                </div>
+                <div class="form-group">
+                    <label for="pp_country_code">Country Code:</label>
+                    <input type="text" id="pp_country_code" name="pp_country_code" value="{{ pp_country_code }}">
+                </div>
+            </div>
+    
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="pp_passport_num">Passport Number:</label>
+                    <input type="text" id="pp_passport_num" name="pp_passport_num" value="{{ pp_passport_num }}">
+                </div>
+                <div class="form-group">
+                    <label for="pp_surname">Surname:</label>
+                    <input type="text" id="pp_surname" name="pp_surname" value="{{ pp_surname }}">
+                </div>
+            </div>
+    
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="pp_name">Name:</label>
+                    <input type="text" id="pp_name" name="pp_name" value="{{ pp_name }}">
+                </div>
+                <div class="form-group">
+                    <label for="pp_thai_name">Thai Name:</label>
+                    <input type="text" id="pp_thai_name" name="pp_thai_name" value="{{ pp_thai_name }}">
+                </div>
+            </div>
+    
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="pp_nationality">Nationality:</label>
+                    <input type="text" id="pp_nationality" name="pp_nationality" value="{{ pp_nationality }}">
+                </div>
+                <div class="form-group">
+                    <label for="pp_birth_date">Birth Date:</label>
+                    <input type="text" id="pp_birth_date" name="pp_birth_date" value="{{ pp_birth_date }}">
+                </div>
+            </div>
+    
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="pp_id_num">ID Number:</label>
+                    <input type="text" id="pp_id_num" name="pp_id_num" value="{{ pp_id_num }}">
+                </div>
+                <div class="form-group">
+                    <label for="pp_sex">Sex:</label>
+                    <input type="text" id="pp_sex" name="pp_sex" value="{{ pp_sex }}">
+                </div>
+            </div>
+    
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="pp_place_of_birth">Place of Birth:</label>
+                    <input type="text" id="pp_place_of_birth" name="pp_place_of_birth" value="{{ pp_place_of_birth }}">
+                </div>
+                <div class="form-group">
+                    <label for="pp_height">Height:</label>
+                    <input type="text" id="pp_height" name="pp_height" value="{{ pp_height }}">
+                </div>
+            </div>
+    
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="pp_date_of_issue">Date of Issue:</label>
+                    <input type="text" id="pp_date_of_issue" name="pp_date_of_issue" value="{{ pp_date_of_issue }}">
+                </div>
+                <div class="form-group">
+                    <label for="pp_date_expire">Date of Expiry:</label>
+                    <input type="text" id="pp_date_expire" name="pp_date_expire" value="{{ pp_date_expire }}">
+                </div>
+            </div>
+    
+            <p><span style="font-weight: bold; color: red;">Please review the information and make edits if any mistakes are found *</span></p>
+            
+            <!-- Buttons -->
+            <div class="btn-container">
+                <a href="/" class="btn">Return</a>
+                <button type="submit" class="btn" onclick="submitEdits()">Save</button>
+            </div>
+
+        </form> <!-- Form ends here -->
+    </div>
+
+    <script>
+
+    
+    function submitEdits() {
+        let formData = new FormData();
+        formData.append("type", document.querySelector('[name="type"]').value);
+        formData.append("country_code", document.querySelector('[name="country_code"]').value);
+        formData.append("passport_num", document.querySelector('[name="passport_num"]').value);
+        formData.append("surname", document.querySelector('[name="surname"]').value);
+        formData.append("name", document.querySelector('[name="name"]').value);
+        formData.append("thai_name", document.querySelector('[name="thai_name"]').value);
+        formData.append("nationality", document.querySelector('[name="nationality"]').value);
+        formData.append("birth_date", document.querySelector('[name="birth_date"]').value);
+        formData.append("id_num", document.querySelector('[name="id_num"]').value);
+        formData.append("sex", document.querySelector('[name="sex"]').value);
+        formData.append("place_of_birth", document.querySelector('[name="place_of_birth"]').value);
+        formData.append("height", document.querySelector('[name="height"]').value);
+        formData.append("date_of_issue", document.querySelector('[name="date_of_issue"]').value);
+        formData.append("date_expire", document.querySelector('[name="date_expire"]').value);
+
+        fetch('/save_pp_edits', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.message);
+                    window.location.href = "/";  // Redirect to homepage
+                } else {
+                    alert("There was an error saving the data.");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+       
+    </script>
+</body>
+</html>
