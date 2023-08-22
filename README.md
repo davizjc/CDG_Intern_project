@@ -4,22 +4,22 @@
 ## Description
 This project provides a web-based platform where users can upload various types of documents like ID cards, passports, driver's licenses, and others. The application classifies the uploaded document type and then uses Optical Character Recognition (OCR) to extract relevant data from the document.
 ## Features
-Upload multiple file formats: jpeg, jpg, png, pdf.
-Automatic document type classification with a trained TensorFlow model.
-OCR extraction for different document types.
-Option to review and edit the extracted data before saving.
-View the list of uploaded documents.
-Move processed files to their respective categories.
+1. Upload multiple file formats: jpeg, jpg, png, pdf.
+1. Automatic document type classification with a trained TensorFlow model.
+1. OCR extraction for different document types.
+1.  Option to review and edit the extracted data before saving.
+1. View the list of uploaded documents.
+1. Move processed files to their respective categories.
 ## Dependencies
-Flask
-TensorFlow
-numpy
-pdf2image
-poppler-utils (for pdf2image)
+1. Flask
+1. TensorFlow
+1. numpy
+1. pdf2image
+1. poppler-utils (for pdf2image)
 ## Setup
-Ensure you have all the required dependencies installed.
-Clone the repository.
-Navigate to the project's root directory.
+1. Ensure you have all the required dependencies installed.
+1. Clone the repository.
+1. Navigate to the project's root directory.
 ## Configuration
 Set the BASE_UPLOAD_FOLDER to your preferred directory for storing uploaded documents.
 Ensure the POPPLER_PATH points to the directory containing the poppler binary. This is required for the pdf2image library to convert PDFs into images.
