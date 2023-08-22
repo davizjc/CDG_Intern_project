@@ -28,4 +28,9 @@ Update the ALLOWED_EXTENSIONS and MAX_FILE_SIZE if needed.
 Certainly! Here's an additional section you can add to the README to inform users about the required configuration for the pytesseract library:
 ## Configuring pytesseract
 If you're using the pytesseract library to handle OCR, you'll need to ensure that Tesseract-OCR is correctly installed on your system and properly configured within your Python environment. check ocr_ID and Passport
-
+## Usage
+1. Start a browser and navigate to http://127.0.0.1:5000/.
+1. Follow the instructions on the website to upload your documents.
+1. Once uploaded, the system will automatically classify the document type and start the OCR extraction.
+1. Review and edit the extracted data if necessary.
+1. Save the extracted and edited data to the database.
