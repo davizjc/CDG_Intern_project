@@ -26,3 +26,8 @@ Set the BASE_UPLOAD_FOLDER to your preferred directory for storing uploaded docu
 Ensure the POPPLER_PATH points to the directory containing the poppler binary. This is required for the pdf2image library to convert PDFs into images.
 Ensure the MODEL_PATH points to the trained TensorFlow model directory.
 Update the ALLOWED_EXTENSIONS and MAX_FILE_SIZE if needed.
+Certainly! Here's an additional section you can add to the README to inform users about the required configuration for the pytesseract library:
+
+## Configuring pytesseract
+If you're using the pytesseract library to handle OCR, you'll need to ensure that Tesseract-OCR is correctly installed on your system and properly configured within your Python environment. check ocr_ID and Passport
+
