@@ -3,7 +3,6 @@
 # README for OCR-based Document Classification and Data Extraction
 ## Description
 This project provides a web-based platform where users can upload various types of documents like ID cards, passports, driver's licenses, and others. The application classifies the uploaded document type and then uses Optical Character Recognition (OCR) to extract relevant data from the document.
-
 ## Features
 Upload multiple file formats: jpeg, jpg, png, pdf.
 Automatic document type classification with a trained TensorFlow model.
@@ -27,7 +26,6 @@ Ensure the POPPLER_PATH points to the directory containing the poppler binary. T
 Ensure the MODEL_PATH points to the trained TensorFlow model directory.
 Update the ALLOWED_EXTENSIONS and MAX_FILE_SIZE if needed.
 Certainly! Here's an additional section you can add to the README to inform users about the required configuration for the pytesseract library:
-
 ## Configuring pytesseract
 If you're using the pytesseract library to handle OCR, you'll need to ensure that Tesseract-OCR is correctly installed on your system and properly configured within your Python environment. check ocr_ID and Passport
 
