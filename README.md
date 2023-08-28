@@ -18,6 +18,7 @@ This project provides a web-based platform where users can upload various types 
 1. poppler-utils (for pdf2image)
 ## Setup
 1. Ensure you have all the required dependencies installed.
+2. donwload and set up sql broweser from ,  https://sqlitebrowser.org/
 1. Clone the repository.
 1. Navigate to the project's root directory.
    
