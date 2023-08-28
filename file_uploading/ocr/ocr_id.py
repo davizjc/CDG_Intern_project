@@ -97,6 +97,7 @@ def initialize_database():
     c.execute(f'''CREATE TABLE IF NOT EXISTS {TABLE_NAME} (
                     file_name TEXT PRIMARY KEY,
                     id_id TEXT,
+                    id_name TEXT,
                     id_thai_name TEXT,
                     id_birth_date TEXT,
                     id_address TEXT,
@@ -105,6 +106,7 @@ def initialize_database():
                     id_extraction_date DATE)''')
     conn.commit()
     conn.close()
+
 
 def insert_data_to_db(file_name, data):
     """
@@ -127,6 +129,7 @@ def insert_data_to_db(file_name, data):
     conn.commit()
     conn.close()
 
+    
 path = '..\\file_uploading\\upload\\static\\'
 IMG_DIR = path + 'national_id_card'
 
