@@ -4,6 +4,7 @@ import numpy as np
 import tensorflow as tf
 from flask import Flask, request, render_template, url_for, session, jsonify , redirect, url_for
 from pdf2image import convert_from_path
+import sqlite3
 
 from functools import partial
 import ocr.ocr_id as ocr_id
@@ -54,8 +55,26 @@ def extract_category(predictions):
     
     return categories[predicted_idx], confidence
 
-@app.route('/')
-def main():
+@app.route('/') #Create database and upload folder
+def main():      
+    directories = [
+        BASE_UPLOAD_FOLDER + "\\static\\commercial_registration",
+        BASE_UPLOAD_FOLDER + "\\static\\driver_license",
+        BASE_UPLOAD_FOLDER + "\\static\\house_register",
+        BASE_UPLOAD_FOLDER + "\\static\\national_id_card",
+        BASE_UPLOAD_FOLDER + "\\static\\passport",
+        BASE_UPLOAD_FOLDER + "\\static\\temp",
+    ]
+    for dir_path in directories:
+        os.makedirs(dir_path, exist_ok=True)
+        # print(f"Directory '{dir_path}' created successfully!")
+
+    db_names = ["result_cm.db", "result_dl.db", "result_hr1.db", "result_hr2.db", "result_id.db", "result_pp.db"]
+
+    for db_name in db_names:
+        conn = sqlite3.connect(db_name)
+        conn.close()
+
     return render_template("index.html")
 
 

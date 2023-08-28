@@ -88,7 +88,7 @@ def extractDataFromIdCard(img):
     return extracted_data_dict
 
 # Define constants
-DB_FILE = 'result_passport.db'
+DB_FILE = 'result_pp.db'
 TABLE_NAME = 'passport_data'
 
 def initialize_database():
