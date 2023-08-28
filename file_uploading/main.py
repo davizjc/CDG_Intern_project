@@ -20,17 +20,17 @@ app = Flask(__name__)
 BASE_UPLOAD_FOLDER = '..\\file_uploading\\upload'
 UPLOAD_FOLDER = os.path.join(BASE_UPLOAD_FOLDER, 'static', 'temp')
 ALLOWED_EXTENSIONS = {'jpeg', 'jpg', 'png', 'pdf'}
-MAX_FILE_SIZE = 2 * 1024 * 1024  # 2MB
-POPPLER_PATH = '..\\poppler\\poppler-23.07.0\\Library\\bin'
+MAX_FILE_SIZE = 2 * 1024  *1024  # 2MB 1024
 MODEL_PATH = '..\\file_uploading\\model\\model_up'
 OCR_MODULES = {'id': ocr_id,'passport': ocr_passport,'dl': ocr_dl,'hr1': ocr_hr1,'hr2': ocr_hr2,'cm': ocr_cm}
 DIRECTORY_PATH = "..\\file_uploading\\upload\\static\\temp"
 
 
+POPPLER_PATH = 'C:\\Users\\cdgs\\OneDrive\\Desktop\\poppler-23.07.0\\Library\\bin'
+
 #secret key
 app.secret_key = 'some_random_string_here'
 
-# MODEL_CATEGORIES = ['driver_license', 'house_register', 'national_id_card', 'passport']
 
 model = tf.keras.models.load_model(MODEL_PATH)
 
@@ -88,8 +88,9 @@ def success():
             if not allowed_file(f.filename):
                 return render_template("error.html", error="Invalid file type. Allowed types: jpeg, jpg, png, pdf")
 
-            if f.content_length > MAX_FILE_SIZE:
+            if len(f.read()) > MAX_FILE_SIZE:
                 return render_template("error.html", error="File is too large. Max allowed size is 2MB")
+            f.seek(0)  # Reset the file pointer after reading
 
             original_name, ext = os.path.splitext(f.filename)
 
@@ -119,12 +120,16 @@ def success():
             predicted_category, confidence = extract_category(predictions)
 
             # Get the expected category from the frontend (HTML)
-            expected_category = request.form.getlist('file_category[]')[i]
+            expected_category = request.form.getlist('file_category[]')[i] 
 
-            if predicted_category != expected_category or confidence < confidence_threshold:
-                error_msg = f"The uploaded file for {category_map[expected_category]} seems to be of type {predicted_category}. Please check and upload again."
+            if confidence < confidence_threshold:
+                error_msg = f"The uploaded file for {category_map[expected_category]} seems to be a random document. Please check and upload again."
                 return render_template("error.html", error=error_msg)
 
+            if predicted_category != expected_category:
+                error_msg = f"The uploaded file for {category_map[expected_category]} seems to be of type {predicted_category}. Please check and upload again."
+                return render_template("error.html", error=error_msg)
+            
             img_url = url_for('static', filename=f'temp\\{filename}')
 
             if predicted_category in category_map.keys():
