@@ -20,8 +20,7 @@ This project provides a web-based platform where users can upload various types 
 1. Ensure you have all the required dependencies installed.
 1. Clone the repository.
 1. Navigate to the project's root directory.
-2. create database file name it
-   result_cm.db,  result_dl.db,  result_hr1.db,  result_hr2.db,  result_id.db,  result_pp.db
+   
 ## Configuration
 Set the BASE_UPLOAD_FOLDER to your preferred directory for storing uploaded documents.
 Ensure the POPPLER_PATH points to the directory containing the poppler binary. This is required for the pdf2image library to convert PDFs into images.
