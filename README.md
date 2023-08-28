@@ -26,8 +26,13 @@ Ensure the POPPLER_PATH points to the directory containing the poppler binary. T
 Ensure the MODEL_PATH points to the trained TensorFlow model directory.
 Update the ALLOWED_EXTENSIONS and MAX_FILE_SIZE if needed.
 Certainly! Here's an additional section you can add to the README to inform users about the required configuration for the pytesseract library:
+
 ## Configuring pytesseract
 If you're using the pytesseract library to handle OCR, you'll need to ensure that Tesseract-OCR is correctly installed on your system and properly configured within your Python environment. check ocr_ID and Passport
+## configuring POPPLER_PATH
+Make sure poppler is downloaded and install in the path 
+1. poppler-23.07.0\\Library\\bin'
+
 ## Usage
 1. Start a browser and navigate to http://127.0.0.1:5000/.
 1. Follow the instructions on the website to upload your documents.
