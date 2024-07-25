@@ -1,4 +1,4 @@
-# Intern_project
+# Document Classification and Data Extraction
 
 # README for OCR-based Document Classification and Data Extraction
 ## Description
