@@ -11,7 +11,13 @@ This project provides a web-based platform where users can upload various types 
 1. View the list of uploaded documents.
 1. Move processed files to their respective categories.
 ## Dependencies
-1. Flask
+
+Backend:
+Database: SQLite
+
+Frontend:
+Framework: Flask (handles web requests and rendering templates)
+
 1. TensorFlow
 1. numpy
 1. pdf2image
