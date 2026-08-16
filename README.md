@@ -1,3 +1,11 @@
+> **Archived.** This was a 2023 internship project and is kept here as-is for
+> reference. It has known bugs (see the successor's audit) and does not run
+> in a modern environment. Active development continues at
+> **[davizjc/thai-doc-extraction](https://github.com/davizjc/thai-doc-extraction)**,
+> a from-scratch rebuild: OCR-first (Typhoon OCR via Ollama, no training
+> data needed) instead of classify-then-OCR, FastAPI + HTMX instead of raw
+> Flask, and Dockerized.
+
 # Document Classification and Data Extraction
 
 # README for OCR-based Document Classification and Data Extraction
